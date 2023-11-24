@@ -1,7 +1,5 @@
 require("dotenv").config()
 const mongoose = require("mongoose")
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
 
 const express = require("express")
 const app = express()
@@ -9,13 +7,12 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 const userRoute = require('./routes/userRoute');
-
+ 
 app.get('/', (req, res) => {
     res.status(200).json({msg: "Bem vindo!"})
 })
 
-
-app.use('/', userRoute);
+app.use('/', userRoute); 
 
 
 const dbUser = process.env.DB_USER

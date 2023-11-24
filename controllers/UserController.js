@@ -1,4 +1,4 @@
-const Tarefas = require("../models/User");
+const User = require("../models/User");
 const asyncHandler = require('express-async-handler')
 
 const bcrypt = require("bcrypt")
@@ -47,8 +47,8 @@ const register = asyncHandler(async(req, res) => {
     const passwordHash = await bcrypt.hash(password, salt)
 
     const user = new User({
-        name,
-        email,
+        name: name,
+        email: email,
         password: passwordHash
     })
     try {
@@ -77,6 +77,8 @@ const login = asyncHandler(async(req, res) => {
         return res.status(404).json({msg: "Email Invalido"})
     }
 
+    console.log(password, user.password)
+
     const checkPassword = await bcrypt.compare(password, user.password)
 
     if(!checkPassword) {
@@ -90,6 +92,9 @@ const login = asyncHandler(async(req, res) => {
             id: user._id,
             },
             secret,
+            {
+                expiresIn: 3600 * 24 * 60 * 60
+            }
         )
         res.status(200).json({msg: "Autenticação bem sucedida", token})
     } catch(err) {
@@ -111,5 +116,6 @@ const getUser = asyncHandler( checkToken, async(req, res) => {
 module.exports = {
     register,
     login,
-    getUser
+    getUser,
+    checkToken
 }
