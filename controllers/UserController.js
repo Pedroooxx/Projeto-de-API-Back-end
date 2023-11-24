@@ -77,8 +77,6 @@ const login = asyncHandler(async(req, res) => {
         return res.status(404).json({msg: "Email Invalido"})
     }
 
-    console.log(password, user.password)
-
     const checkPassword = await bcrypt.compare(password, user.password)
 
     if(!checkPassword) {
