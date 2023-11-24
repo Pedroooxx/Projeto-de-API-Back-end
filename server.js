@@ -10,7 +10,7 @@ const userRoute = require('./routes/userRoute');
 app.use('/', userRoute);
 
 const gameRoute = require('./routes/gameRoute');
-app.use('/games/:id', gameRoute); 
+app.use('/games', gameRoute); 
  
 app.get('/', (req, res) => {
     res.status(200).json({msg: "Bem vindo!"})

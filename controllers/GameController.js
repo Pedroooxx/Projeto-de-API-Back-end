@@ -24,7 +24,7 @@ const addGame = async (req, res) => {
 
 const editGame = async (req, res) => {
     try{
-        const{id} = req.params;
+        const{id} = req.body;
         const game = await Games.findByIdAndUpdate(id, req.body);
         if(!game) {
             return res.status(404).json({message: "Jogo não encontrado"})
@@ -39,7 +39,7 @@ const editGame = async (req, res) => {
 
 const deleteGame = async (req, res) => {
     try{
-        const {id} = await req.params;
+        const {id} = await req.body;
         const game = await Games.findByIdAndDelete(id);
         if(!game){
             res.status(404)
