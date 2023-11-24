@@ -81,8 +81,13 @@ const login = async(req, res) => {
 
 const getUser = async(req, res) => {
     const id = req.params.id
-
-    const user = await User.findById(id, "-password")
+    let user
+    
+    try{
+        user = await User.findById(id, "-password")
+    } catch {
+        return res.status(404).json({msg: "Id não encontrada."})
+    }
 
     if(!user) {
         return res.status(404).json({msg: "Usuario não encontrado."})
