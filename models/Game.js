@@ -4,7 +4,7 @@ const gamesSchema = mongoose.Schema(
     {
         title: {
             type: String,
-            required: [true, "Digite o nome da Tarefa"]
+            required: [true, "Digite o nome do Jogo"]
         },
         year: {
             type: Number,
@@ -13,6 +13,10 @@ const gamesSchema = mongoose.Schema(
         genre: {
             type: String,
             required: [true, "Digite o genero do jogo"]
+        },
+        ownerId: {
+            type: String,
+            required:[true, "Digite o dono do jogo"]
         }
     },
     {

@@ -1,8 +1,10 @@
 const Games = require("../models/Game");
+const User = require("../models/User");
 
 const getGames = async(req, res) => {
+    const userId = req.userId
     try { 
-        const games = await Games.find({});
+        const games = await Games.find({ownerId: userId});
         res.status(200).json(games)
     }
     catch (error) {
@@ -25,6 +27,7 @@ const addGame = async (req, res) => {
 const editGame = async (req, res) => {
     try{
         const{id} = req.params;
+        console.log(id)
         const game = await Games.findByIdAndUpdate(id, req.body);
         if(!game) {
             return res.status(404).json({message: "Jogo não encontrado"})

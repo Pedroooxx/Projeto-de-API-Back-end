@@ -11,6 +11,10 @@ app.use('/', userRoute);
 
 const gameRoute = require('./routes/gameRoute');
 app.use('/games', gameRoute); 
+
+const achievmentsRoute = require('./routes/achievmentsRoute');
+app.use('/games/achievments/', achievmentsRoute); 
+ 
  
 app.get('/', (req, res) => {
     res.status(200).json({msg: "Bem vindo!"})
