@@ -1,29 +1,8 @@
-const User = require("../models/User");
-const asyncHandler = require('express-async-handler')
-
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
 
-function checkToken(req, res, next) {
-    const authHeader = req.headers["authorization"]
-    const token = authHeader && authHeader.split(" ")[1]
-    
-    if(!token) {
-        return res.status(401).json({msg: "Acesso negado."})
-    }
+const User = require("../models/User");
 
-    try{
-        const secret = process.env.SECRET
-        jwt.verify(token, secret)
-
-        next()
-
-    } catch(error) {
-        res.status(400).json({msg: "Token Invalido."})
-    }
-}
-
-const register = asyncHandler(async(req, res) => {
+const register = async(req, res) => {
 
     const {name, password, email} = req.body
 
@@ -58,9 +37,9 @@ const register = asyncHandler(async(req, res) => {
         console.log(error)
         res.status(500).json({msg: "Erro no Servidor"})
     }
-})
+}
 
-const login = asyncHandler(async(req, res) => {
+const login = async(req, res) => {
 
     const {password, email} = req.body
 
@@ -98,9 +77,9 @@ const login = asyncHandler(async(req, res) => {
     } catch(err) {
         console.log(err)
     }
-})
+}
 
-const getUser = asyncHandler( checkToken, async(req, res) => {
+const getUser = async(req, res) => {
     const id = req.params.id
 
     const user = await User.findById(id, "-password")
@@ -109,11 +88,10 @@ const getUser = asyncHandler( checkToken, async(req, res) => {
         return res.status(404).json({msg: "Usuario não encontrado."})
     }
     res.status(200).json({user})
-})
+}
 
 module.exports = {
     register,
     login,
-    getUser,
-    checkToken
+    getUser
 }
