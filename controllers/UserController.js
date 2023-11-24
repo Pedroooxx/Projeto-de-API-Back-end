@@ -82,7 +82,7 @@ const login = async(req, res) => {
 const getUser = async(req, res) => {
     const id = req.params.id
     let user
-    
+
     try{
         user = await User.findById(id, "-password")
     } catch {
