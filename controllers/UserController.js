@@ -131,21 +131,20 @@ const getUser = async(req, res) => {
 
 const getLibrary = async(req, res) => {
     const id = req.userId
-
+    let user
     try{
-        const user = await User.findById(id, "-password")
+        user = await User.findById(id, "-password")
         const games = await Games.find({ownerId: id})
         //console.log(games.id)
         //const achievments = await Achievments.find({gameId:})
-
-        res.status(200).json({user, games})
     } catch {
-        res.status(500)
-        throw new Error(error.message)
+        return res.status(404).json({msg: "Id não encontrada."})
     }
+
     if(!user) {
         return res.status(404).json({msg: "Usuario não encontrado."})
     }
+    res.status(200).json({user, games})
 }
 
 module.exports = {
