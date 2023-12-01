@@ -9,8 +9,8 @@ router.get('/',checkToken, getGames)
 
 router.post('/',checkToken, addGame)
 
-router.put('/',checkToken, editGame)
+router.put('/:id',checkToken, editGame)
 
-router.delete('/',checkToken, deleteGame)
+router.delete('/:id',checkToken, deleteGame)
 
 module.exports = router;

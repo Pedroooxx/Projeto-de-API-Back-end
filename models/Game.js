@@ -16,7 +16,7 @@ const gamesSchema = mongoose.Schema(
         },
         ownerId: {
             type: String,
-            required:[true, "Digite o dono do jogo"]
+            required: [true]
         }
     },
     {
