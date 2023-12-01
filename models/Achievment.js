@@ -13,6 +13,9 @@ const achievmentsSchema = mongoose.Schema(
         difficulty: {
             type: String,
             required: [true, "Digite a dificuldade da Conquista"]
+        },
+        gameId: {
+            type: String
         }
     },
     {

@@ -1,5 +1,4 @@
 const Games = require("../models/Game");
-const User = require("../models/User");
 
 const getGames = async(req, res) => {
     const userId = req.userId
