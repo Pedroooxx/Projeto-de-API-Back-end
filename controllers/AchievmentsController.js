@@ -3,19 +3,17 @@ const Games = require("../models/Game");
 
 const getAchievment = async(req, res) => {
 
-    const achievmentId = req.params.id
-
-    const achievment = await Achievments.findById(achievmentsId)
-
-    const owner = await Games.findById(achievment.gameId)
-    if(owner.ownerId != req.userId)
-    {
-        return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
-    }
-
     try { 
-        const games = await Games.find({ownerId: userId});
-        res.status(200).json(games)
+        
+        const achievmentId = req.params.id
+        const achievment = await Achievments.findById(achievmentId)
+        const game = await Games.findById(achievment.gameId)
+
+        if(game.ownerId != req.userId)
+        {
+            return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
+        }
+        res.status(200).json(achievment)
     }
     catch (error) {
         res.status(500)
@@ -23,17 +21,14 @@ const getAchievment = async(req, res) => {
     }
 }
 
-const addAchievments = async (req, res) => {
-    
-    //const userId = req.userId
-    //console.log(await Games.findById(gameId)
+const addAchievment = async (req, res) => {
 
     try{
         const {title, points, difficulty} = req.body
         const gameId = req.params.id
 
-        const owner = await Games.findById(gameId)
-        if(owner.ownerId != req.userId)
+        const game= await Games.findById(gameId)
+        if(game.ownerId != req.userId)
         {
             return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
         }
@@ -53,21 +48,20 @@ const addAchievments = async (req, res) => {
     }
 }
 
-const editAchievments = async (req, res) => {
-    try{
-        const{id} = req.params;
-        const owner = await Games.findById(id)
-        if(owner.ownerId != req.userId)
+const editAchievment = async(req, res) => {
+    try { 
+
+        const achievmentId = req.params.id
+        const achievment = await Achievments.findById(achievmentId)
+        const game = await Games.findById(achievment.gameId)
+
+        if(game.ownerId != req.userId)
         {
             return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
         }
-        const game = await Games.findByIdAndUpdate(id, req.body);
-        console.log(game.ownerId)
 
-        if(!game) {
-            return res.status(404).json({message: "Jogo não encontrado"})
-        }
-        res.status(200).json(game);
+        const achievmentFinal = await Achievments.findByIdAndUpdate(achievmentId, req.body);
+        res.status(200).json(achievmentFinal)
     }
     catch (error) {
         res.status(500)
@@ -75,7 +69,7 @@ const editAchievments = async (req, res) => {
     }
 }
 
-const deleteAchievments = async (req, res) => {
+const deleteAchievment = async (req, res) => {
     try{
         const {id} = await req.params;
         const owner = await Games.findById(id)
@@ -98,7 +92,7 @@ const deleteAchievments = async (req, res) => {
 
 module.exports = {
     getAchievment,
-    addAchievments,
-    editAchievments,
-    deleteAchievments
+    addAchievment,
+    editAchievment,
+    deleteAchievment
 }

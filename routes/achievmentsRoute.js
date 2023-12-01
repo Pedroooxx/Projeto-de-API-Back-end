@@ -1,16 +1,16 @@
 const express = require('express')
 const Achievments = require('../models/Achievment')
-const {getAchievment, addAchievments, editAchievments, deleteAchievments} = require("../controllers/AchievmentsController")
+const {getAchievment, addAchievment, editAchievment, deleteAchievment} = require("../controllers/AchievmentsController")
 const checkToken = require("../middlewares/checkToken")
 
 const router = express.Router();
 
 router.get('/:id',checkToken, getAchievment)
 
-router.post('/:id',checkToken, addAchievments)
+router.post('/:id',checkToken, addAchievment)
 
-router.put('/',checkToken, editAchievments)
+router.put('/',checkToken, editAchievment)
 
-router.delete('/',checkToken, deleteAchievments)
+router.delete('/',checkToken, deleteAchievment)
 
 module.exports = router;
