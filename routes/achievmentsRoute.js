@@ -9,8 +9,8 @@ router.get('/:id',checkToken, getAchievment)
 
 router.post('/:id',checkToken, addAchievment)
 
-router.put('/',checkToken, editAchievment)
+router.put('/:id',checkToken, editAchievment)
 
-router.delete('/',checkToken, deleteAchievment)
+router.delete('/:id',checkToken, deleteAchievment)
 
 module.exports = router;

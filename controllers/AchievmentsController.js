@@ -69,22 +69,25 @@ const editAchievment = async(req, res) => {
     }
 }
 
-const deleteAchievment = async (req, res) => {
-    try{
-        const {id} = await req.params;
-        const owner = await Games.findById(id)
-        if(owner.ownerId != req.userId)
+const deleteAchievment = async(req, res) => {
+    try { 
+
+        const achievmentId = req.params.id
+        const achievment = await Achievments.findById(achievmentId)
+        const game = await Games.findById(achievment.gameId)
+
+        if(game.ownerId != req.userId)
         {
             return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
         }
-        const game = await Games.findByIdAndDelete(id);
-        if(!game){
+        const achievmentOut = await Achievments.findByIdAndDelete(achievmentId);
+        if(!achievmentOut){
             res.status(404)
-            throw new Error({message: "Jogo não encontrado"})
+            throw new Error({message: "Conquista não encontrada"})
         }
-        res.status(200).json(game)
+        res.status(200).json(achievmentOut)
     }
-    catch (error){
+    catch (error) {
         res.status(500)
         throw new Error(error.message)
     }

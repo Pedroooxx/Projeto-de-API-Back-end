@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 const User = require("../models/User");
+const Games = require("../models/Game");
+const Achievments = require("../models/Achievment");
 
 const register = async(req, res) => {
 
@@ -127,10 +129,30 @@ const getUser = async(req, res) => {
     res.status(200).json({user})
 }
 
+const getLibrary = async(req, res) => {
+    const id = req.userId
+
+    try{
+        const user = await User.findById(id, "-password")
+        const games = await Games.find({ownerId: id})
+        //console.log(games.id)
+        //const achievments = await Achievments.find({gameId:})
+
+        res.status(200).json({user, games})
+    } catch {
+        res.status(500)
+        throw new Error(error.message)
+    }
+    if(!user) {
+        return res.status(404).json({msg: "Usuario não encontrado."})
+    }
+}
+
 module.exports = {
     register,
     login,
     editUser,
     deleteUser,
-    getUser
+    getUser,
+    getLibrary
 }
