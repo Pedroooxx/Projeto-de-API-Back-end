@@ -9,10 +9,10 @@ router.post('/registro', register)
 
 router.post('/entrar', login)
 
-router.put('/editar/:id',checkToken, editUser)
+router.put('/editar',checkToken, editUser)
 
-router.delete('/apagar/:id',checkToken, deleteUser)
+router.delete('/apagar',checkToken, deleteUser)
 
-router.get('/usuario/:id',checkToken, getUser)
+router.get('/usuario',checkToken, getUser)
 
 module.exports = router;

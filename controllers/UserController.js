@@ -82,7 +82,7 @@ const login = async(req, res) => {
 
 const editUser = async (req, res) => {
     try{
-        const{id} = req.params;
+        const id = req.userId
         const user = await User.findByIdAndUpdate(id, req.body);
         
         if(!user) {
@@ -98,7 +98,7 @@ const editUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try{
-        const {id} = await req.params;
+        const id = req.userId
         const user = await User.findByIdAndDelete(id);
         if(!user){
             res.status(404)
@@ -113,7 +113,7 @@ const deleteUser = async (req, res) => {
 }
 
 const getUser = async(req, res) => {
-    const id = req.params.id
+    const id = req.userId
     let user
     try{
         user = await User.findById(id, "-password")
