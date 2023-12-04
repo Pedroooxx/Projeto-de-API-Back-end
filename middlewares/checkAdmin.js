@@ -1,10 +1,10 @@
 const User = require("../models/User");
 
-function checkAdmin (permissions, userRole) {
+function checkAdmin (role, permissions) {
 
     return(req, res, next) => {
-        console.log()
-        if(permissions.includes(userRole)){
+        console.log(role)
+        if(permissions.includes(role)){
             next()
         } else {
             res.status(401).json({msg: "Acesso NEGADO."})

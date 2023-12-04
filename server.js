@@ -13,7 +13,7 @@ const gameRoute = require('./routes/gameRoute');
 app.use('/games', gameRoute); 
 
 const achievmentsRoute = require('./routes/achievmentsRoute');
-app.use('/games/achievments', achievmentsRoute); 
+app.use('/games/achievments', achievmentsRoute);
  
  
 app.get('/', (req, res) => {

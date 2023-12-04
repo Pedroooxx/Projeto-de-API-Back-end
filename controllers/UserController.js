@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 const User = require("../models/User");
@@ -25,13 +24,10 @@ const register = async(req, res) => {
         return res.status(422).json({msg: "Utilize outro Email"})
     }
 
-    const salt = await bcrypt.genSalt(12)
-    const passwordHash = await bcrypt.hash(password, salt)
-
     const user = new User({
         name: name,
         email: email,
-        password: passwordHash
+        password: password
     })
     try {
         await user.save()
@@ -53,16 +49,10 @@ const login = async(req, res) => {
         return res.status(422).json({msg: "Digite a Senha."})
     }
 
-    const user = await User.findOne({email: email})
+    const user = await User.findOne({email: email, password: password})
 
     if(!user) {
-        return res.status(404).json({msg: "Email Invalido"})
-    }
-
-    const checkPassword = await bcrypt.compare(password, user.password)
-
-    if(!checkPassword) {
-        return res.status(404).json({msg: "Senha Invalida"})
+        return res.status(404).json({msg: "Login ou Senha Invalido"})
     }
 
     try {
@@ -77,9 +67,11 @@ const login = async(req, res) => {
             }
         )
         res.status(200).json({msg: "Autenticação bem sucedida", token})
+
     } catch(err) {
         console.log(err)
     }
+
 }
 
 const editUser = async (req, res) => {
@@ -118,8 +110,7 @@ const getUser = async(req, res) => {
     const id = req.userId
     let user
     try{
-        user = await User.findById(id, "-password")
-        req.userRole = user.role
+        v
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }
@@ -211,7 +202,230 @@ const adminGetUsers = async(req, res) => {
     res.status(200).json({users})
 }
 
+const getRole = async(req, res) => {
+    const user = await User.findById(req.userId)
+    return user.role
+}
+
+const installdb = async (req, res, next) => {
+
+    try{
+        const user = new User(
+            {
+            _id: "656e1e5bc2f44e3fed586406",
+            name: "marcos",
+            email: "marcos@gmail.com",
+            password: "183gmvj2"
+        })
+        await user.save()
+        const user2 = new User(
+            {
+            _id: "656e1e5cc2f44e3fed586408",
+            name: "lucas",
+            email: "lucas@gmail.com",
+            password: "891jal52"
+        })
+        await user2.save()
+        const user3 = new User(
+            {
+            _id: "656e1df65edfc1b4b10ea802",
+            name: "julia",
+            email: "julia@gmail.com",
+            password: "jul2202a"
+        })
+        await user3.save()
+        const user4 = new User(
+            {
+            _id: "656e1e5cc2f44e3fed58640c",
+            name: "maria",
+            email: "maria@gmail.com",
+            password: "177gmp22"
+        })
+        await user4.save()
+
+        const user5 = new User(
+            {
+            _id: "656e1e5cc2f44e3fed58640e",
+            name: "admin",
+            email: "admin@gmail.com",
+            password: "183gmvj2",
+            role: "admin"
+        })
+        await user5.save()
+
+            await Games.create({
+                _id: "656e24e02dd591737a711ad1",
+                title: "Assasin's Creed Unity",
+                genre: "Action",
+                year: 2015,
+                ownerId: "656e1e5bc2f44e3fed586406"
+            })
+
+                await Achievments.create({
+                    title: "Leap of Faith",
+                    points: 10,
+                    difficulty: "Low",
+                    gameId: "656e24e02dd591737a711ad1"
+                })
+                await Achievments.create({
+                    title: "Hidden Blade",
+                    points: 20,
+                    difficulty: "Medium",
+                    gameId: "656e24e02dd591737a711ad1"
+                })
+                await Achievments.create({
+                    title: "The ultimate Assassin",
+                    points: 30,
+                    difficulty: "Hard",
+                    gameId: "656e24e02dd591737a711ad1"
+                })
+
+            await Games.create({
+                _id: "656e24e02dd591737a711ad3",
+                title: "Grand Theft Auto 5",
+                genre: "Action",
+                year: 2013,
+                ownerId: "656e1e5bc2f44e3fed586406"
+            })
+
+                await Achievments.create({
+                    title: "Pay'd with gold",
+                    points: 30,
+                    difficulty: "Hard",
+                    gameId: "656e24e02dd591737a711ad3"
+                })
+
+            await Games.create({
+                _id: "656e24e02dd591737a711ad5",
+                title: "EA Sports UFC 2",
+                genre: "Fight",
+                year: 2017,
+                ownerId: "656e1e5bc2f44e3fed586406"
+            })
+            await Games.create({
+                _id: "656e24e02dd591737a711ad7",
+                title: "Need For Speed 2015",
+                genre: "Simulation",
+                year: 2015,
+                ownerId: "656e1e5cc2f44e3fed586408"
+            })
+            await Games.create({
+                _id: "656e24e12dd591737a711ad9",
+                title: "FIFA 23",
+                genre: "Sports",
+                year: 2022,
+                ownerId: "656e1e5cc2f44e3fed586408"
+            })
+            await Games.create({
+                _id: "656e24e12dd591737a711adb",
+                title: "F1 2023",
+                genre: "Simulation",
+                year: 2023,
+                ownerId: "656e1e5cc2f44e3fed586408"
+            })
+                await Achievments.create({
+                    title: "First Podium!",
+                    points: 10,
+                    difficulty: "Low",
+                    gameId: "656e24e12dd591737a711adb"
+                })
+                await Achievments.create({
+                    title: "Win the Drivers Championship",
+                    points: 20,
+                    difficulty: "Medium",
+                    gameId: "6656e24e12dd591737a711adb"
+                })
+            await Games.create({
+                _id: "656e24e12dd591737a711add",
+                title: "Counter Strike 2",
+                genre: "Action",
+                year: 2023,
+                ownerId: "656e1df65edfc1b4b10ea802"
+            })
+
+                await Achievments.create({
+                    title: "Win on a 1v5",
+                    points: 30,
+                    difficulty: "Hard",
+                    gameId: "656e24e12dd591737a711add"
+                })
+
+            await Games.create({
+                _id: "656e24e12dd591737a711adf",
+                title: "The Witcher 3",
+                genre: "RPG",
+                year: 2014,
+                ownerId: "656e1df65edfc1b4b10ea802"
+            })
+
+                await Achievments.create({
+                    title: "Monster Killer!",
+                    points: 20,
+                    difficulty: "Medium",
+                    gameId: "656e24e12dd591737a711adf"
+                })
+
+            await Games.create({
+                _id: "656e24e12dd591737a711ae1",
+                title: "Cyberpunk 2077",
+                genre: "RPG",
+                year: 2020,
+                ownerId: "656e1df65edfc1b4b10ea802"
+            })
+
+                await Achievments.create({
+                    title: "Upgrader!",
+                    points: 20,
+                    difficulty: "Medium",
+                    gameId: "656e24e12dd591737a711ae1"
+                })
+
+            await Games.create({
+                _id: "656e24e12dd591737a711ae3",
+                title: "Fall Guys",
+                genre: "Casual",
+                year: 2020,
+                ownerId: "656e1e5cc2f44e3fed58640c"
+            })
+
+                await Achievments.create({
+                    title: "End up first every round.",
+                    points: 30,
+                    difficulty: "Hard",
+                    gameId: "656e24e12dd591737a711ae3"
+                })
+
+            await Games.create({
+                _id: "656e24e12dd591737a711ae5",
+                title: "Fortnite",
+                genre: "Action",
+                year: 2017,
+                ownerId: "656e1e5cc2f44e3fed58640c"
+            })
+            
+            await Games.create({
+                _id: "656e24e12dd591737a711ae7",
+                title: "Dota 2",
+                genre: "Moba",
+                year: 2013,
+                ownerId: "656e1e5cc2f44e3fed58640e"
+            })
+                await Achievments.create({
+                    title: "Dota is my life",
+                    points: 50,
+                    difficulty: "Impossible",
+                    gameId: "656e24e12dd591737a711ae7"
+                })
+
+        res.status(201).json({msg: "DB instalada com sucesso."})
+
+    } catch {
+        res.status(400).json({msg: "DB Já instalada"})
+    }
+}
+
 module.exports = {
+    installdb,
     register,
     login,
     editUser,
@@ -221,5 +435,6 @@ module.exports = {
     getAGame,
     adminDeleteUser,
     adminEditUser,
-    adminGetUsers
+    adminGetUsers,
+    getRole
 }
