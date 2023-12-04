@@ -27,7 +27,7 @@ const addAchievment = async (req, res) => {
         const {title, points, difficulty} = req.body
         const gameId = req.params.id
 
-        const game= await Games.findById(gameId)
+        const game = await Games.findById(gameId)
         if(game.ownerId != req.userId)
         {
             return res.status(404).json({message: "Usuário não está ligado a esse jogo."})

@@ -131,12 +131,10 @@ const getUser = async(req, res) => {
 
 const getLibrary = async(req, res) => {
     const id = req.userId
-    let user
+    let user, games
     try{
         user = await User.findById(id, "-password")
-        const games = await Games.find({ownerId: id})
-        //console.log(games.id)
-        //const achievments = await Achievments.find({gameId:})
+        games = await Games.find({ownerId: id})
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }
@@ -147,11 +145,29 @@ const getLibrary = async(req, res) => {
     res.status(200).json({user, games})
 }
 
+
+const getAGame = async(req, res) => {
+    const{id} = req.params;
+    let game, achievments
+    try{
+        game = await Games.findById(id)
+        if(game.ownerId != req.userId)
+        {
+            return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
+        }
+        achievments = await Achievments.find({gameId: id})
+    } catch {
+        return res.status(404).json({msg: "Id não encontrada."})
+    }
+    res.status(200).json({game, achievments})
+}
+
 module.exports = {
     register,
     login,
     editUser,
     deleteUser,
     getUser,
-    getLibrary
+    getLibrary,
+    getAGame
 }
