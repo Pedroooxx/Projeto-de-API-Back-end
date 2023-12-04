@@ -162,6 +162,54 @@ const getAGame = async(req, res) => {
     res.status(200).json({game, achievments})
 }
 
+// Admin Controllers
+
+const adminEditUser = async (req, res) => {
+    const {id} = req.params;
+    try{
+        const user = await User.findByIdAndUpdate(id, req.body);
+        
+        if(!user) {
+            return res.status(404).json({message: "Usuário não encontrado"})
+        }
+        res.status(200).json(user);
+    }
+    catch (error) {
+        res.status(500)
+        throw new Error(error.message)
+    }
+}
+
+const adminDeleteUser = async (req, res) => {
+    const {id} = req.params;
+    try{
+        const user = await User.findByIdAndDelete(id);
+        if(!user){
+            res.status(404)
+            throw new Error({message: "Usuario não encontrado"})
+        }
+        res.status(200).json(user)
+    }
+    catch (error){
+        res.status(500)
+        throw new Error(error.message)
+    }
+}
+
+const adminGetUsers = async(req, res) => {
+    let users
+    try{
+        users = await User.find()
+    } catch {
+        return res.status(404).json({msg: "Id não encontrada."})
+    }
+
+    if(!users) {
+        return res.status(404).json({msg: "Base de Usuários vazia."})
+    }
+    res.status(200).json({users})
+}
+
 module.exports = {
     register,
     login,
@@ -169,5 +217,8 @@ module.exports = {
     deleteUser,
     getUser,
     getLibrary,
-    getAGame
+    getAGame,
+    adminDeleteUser,
+    adminEditUser,
+    adminGetUsers
 }

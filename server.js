@@ -9,10 +9,6 @@ app.use(express.urlencoded({extended: false}))
 const userRoute = require('./routes/userRoute');
 app.use('/', userRoute);
 
-const adminRoute = require('./routes/adminRoute');
-app.use('/admin', adminRoute);
-
-
 const gameRoute = require('./routes/gameRoute');
 app.use('/games', gameRoute); 
 

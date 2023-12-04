@@ -2,8 +2,9 @@ const express = require('express')
 const User = require('../models/User')
 const Games = require('../models/Game')
 const Achievments = require('../models/Achievment')
-const {register, login, editUser, deleteUser, getUser, getLibrary, getAGame} = require("../controllers/UserController")
+const {register, login, editUser, deleteUser, getUser, getLibrary, getAGame, adminDeleteUser, adminEditUser, adminGetUsers} = require("../controllers/UserController")
 const checkToken = require("../middlewares/checkToken")
+const {checkAdmin, adminPerms} = require("../middlewares/checkAdmin")
 
 const router = express.Router();
 
@@ -20,5 +21,13 @@ router.get('/usuario', checkToken, getUser)
 router.get('/usuario/biblioteca', checkToken, getLibrary)
 
 router.get('/usuario/biblioteca/jogo/:id', checkToken, getAGame)
+
+//Rotas de Administrador
+
+router.get('/admin/usuarios', checkToken, checkAdmin(["admin"]), adminGetUsers)
+
+router.put('/admin/editar/:id', checkToken, checkAdmin(["admin"]), adminEditUser)
+
+router.delete('/admin/apagar/:id', checkToken, checkAdmin(["admin"]), adminDeleteUser)
 
 module.exports = router;
