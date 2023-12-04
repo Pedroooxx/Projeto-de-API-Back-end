@@ -16,6 +16,8 @@ function checkToken(req, res, next) {
 
         req.userId = userId.id
 
+        console.log(userId)
+
         next()
 
     } catch(error) {

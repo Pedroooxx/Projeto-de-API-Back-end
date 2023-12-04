@@ -119,6 +119,7 @@ const getUser = async(req, res) => {
     let user
     try{
         user = await User.findById(id, "-password")
+        req.userRole = user.role
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }

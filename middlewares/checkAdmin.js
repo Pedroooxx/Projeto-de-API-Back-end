@@ -1,9 +1,9 @@
 const User = require("../models/User");
 
-function checkAdmin (permissions) {
+function checkAdmin (permissions, userRole) {
+
     return(req, res, next) => {
-        const userRole = "admin"
-        console.log(userRole)
+        console.log()
         if(permissions.includes(userRole)){
             next()
         } else {
@@ -12,8 +12,4 @@ function checkAdmin (permissions) {
     }
 }
 
-const adminPerms = (req, res, next) => {
-    next()
-}
-
-module.exports = {checkAdmin, adminPerms}
+module.exports = checkAdmin

@@ -4,7 +4,7 @@ const Games = require('../models/Game')
 const Achievments = require('../models/Achievment')
 const {register, login, editUser, deleteUser, getUser, getLibrary, getAGame, adminDeleteUser, adminEditUser, adminGetUsers} = require("../controllers/UserController")
 const checkToken = require("../middlewares/checkToken")
-const {checkAdmin, adminPerms} = require("../middlewares/checkAdmin")
+const checkAdmin = require("../middlewares/checkAdmin")
 
 const router = express.Router();
 
@@ -24,10 +24,10 @@ router.get('/usuario/biblioteca/jogo/:id', checkToken, getAGame)
 
 //Rotas de Administrador
 
-router.get('/admin/usuarios', checkToken, checkAdmin(["admin"]), adminGetUsers)
+router.get('/admin/usuarios', checkToken, checkAdmin(["admin"], "admin"), adminGetUsers)
 
-router.put('/admin/editar/:id', checkToken, checkAdmin(["admin"]), adminEditUser)
+router.put('/admin/editar/:id', checkToken, checkAdmin(["admin"], "admin"), adminEditUser)
 
-router.delete('/admin/apagar/:id', checkToken, checkAdmin(["admin"]), adminDeleteUser)
+router.delete('/admin/apagar/:id', checkToken, checkAdmin(["admin"], "admin"), adminDeleteUser)
 
 module.exports = router;
