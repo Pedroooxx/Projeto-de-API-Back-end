@@ -2,8 +2,16 @@ const Games = require("../models/Game");
 
 const getGames = async(req, res) => {
     const userId = req.userId
+
+    
+    const pagina = parseInt(req.query.page) || 1
+    const pageSize = 5
+
     try { 
-        const games = await Games.find({ownerId: userId});
+        const games = await Games.find({ownerId: userId})
+        .skip((pagina-1) *pageSize)
+        .limit(pageSize);
+
         res.status(200).json(games)
     }
     catch (error) {

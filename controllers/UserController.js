@@ -110,7 +110,7 @@ const getUser = async(req, res) => {
     const id = req.userId
     let user
     try{
-        v
+        user = await User.findById(id)
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }
@@ -124,9 +124,15 @@ const getUser = async(req, res) => {
 const getLibrary = async(req, res) => {
     const id = req.userId
     let user, games
+
+    const pagina = parseInt(req.query.page) || 1
+    const pageSize = 5
+
     try{
         user = await User.findById(id, "-password")
         games = await Games.find({ownerId: id})
+        .skip((pagina-1) *pageSize)
+        .limit(pageSize);
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }
@@ -141,6 +147,10 @@ const getLibrary = async(req, res) => {
 const getAGame = async(req, res) => {
     const{id} = req.params;
     let game, achievments
+
+    const pagina = parseInt(req.query.page) || 1
+    const pageSize = 5
+
     try{
         game = await Games.findById(id)
         if(game.ownerId != req.userId)
@@ -148,6 +158,8 @@ const getAGame = async(req, res) => {
             return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
         }
         achievments = await Achievments.find({gameId: id})
+        .skip((pagina-1) *pageSize)
+        .limit(pageSize);
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }
@@ -189,9 +201,16 @@ const adminDeleteUser = async (req, res) => {
 }
 
 const adminGetUsers = async(req, res) => {
+    
     let users
+    const pagina = parseInt(req.query.page) || 1
+    const pageSize = 5
+
     try{
         users = await User.find()
+        .skip((pagina-1) *pageSize)
+        .limit(pageSize);
+
     } catch {
         return res.status(404).json({msg: "Id não encontrada."})
     }
@@ -215,7 +234,7 @@ const installdb = async (req, res, next) => {
             _id: "656e1e5bc2f44e3fed586406",
             name: "marcos",
             email: "marcos@gmail.com",
-            password: "183gmvj2"
+            password: "183mmc00"
         })
         await user.save()
         const user2 = new User(
@@ -245,13 +264,40 @@ const installdb = async (req, res, next) => {
 
         const user5 = new User(
             {
+            name: "nicolas",
+            email: "nicolas@gmail.com",
+            password: "nic333as",
+            role: "user"
+        })
+        await user5.save()
+
+        const user6 = new User(
+            {
+            name: "amanda",
+            email: "amanda@gmail.com",
+            password: "aman121d",
+            role: "user"
+        })
+        await user6.save()
+
+        const user7 = new User(
+            {
+            name: "josé",
+            email: "jose@gmail.com",
+            password: "jo1221se",
+            role: "user"
+        })
+        await user7.save()
+
+        const user8 = new User(
+            {
             _id: "656e1e5cc2f44e3fed58640e",
             name: "admin",
             email: "admin@gmail.com",
             password: "183gmvj2",
             role: "admin"
         })
-        await user5.save()
+        await user8.save()
 
             await Games.create({
                 _id: "656e24e02dd591737a711ad1",

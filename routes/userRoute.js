@@ -29,10 +29,10 @@ router.get('/usuario/biblioteca/jogo/:id', checkToken, getAGame)
 
 //Rotas de Administrador
 
-router.get('/admin/usuarios', checkToken, checkAdmin(getRole, ["admin"]), adminGetUsers)
+router.get('/admin/usuarios', checkToken, checkAdmin("admin", ["admin"]), adminGetUsers)
 
-router.put('/admin/editar/:id', checkToken, checkAdmin(getRole, ["admin"]), adminEditUser)
+router.put('/admin/editar/:id', checkToken, checkAdmin("admin", ["admin"]), adminEditUser)
 
-router.delete('/admin/apagar/:id', checkToken, checkAdmin(getRole, ["admin"]), adminDeleteUser)
+router.delete('/admin/apagar/:id', checkToken, checkAdmin("admin", ["admin"]), adminDeleteUser)
 
 module.exports = router;
