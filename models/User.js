@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema(
         password: {
             type: String,
             required: [true, "Digite sua Senha"]
+        },
+        role: {
+            type: String,
+            default: "user"
         }
     },
     {
