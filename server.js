@@ -14,11 +14,6 @@ app.use('/games', gameRoute);
 
 const achievmentsRoute = require('./routes/achievmentsRoute');
 app.use('/games/achievments', achievmentsRoute);
- 
- 
-app.get('/', (req, res) => {
-    res.status(200).json({msg: "Bem vindo!"})
-})
 
 const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASSWORD
