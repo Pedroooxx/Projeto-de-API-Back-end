@@ -18,6 +18,9 @@ app.use('/games', gameRoute);
 const achievmentsRoute = require('./routes/achievmentsRoute');
 app.use('/games/achievments', achievmentsRoute);
 
+const swaggerRoute = require('./routes/swaggerRoute');
+app.use('/docs', swaggerRoute);
+
 const dbUser = process.env.DB_USER
 const dbPassword = process.env.DB_PASSWORD
 const PORT = process.env.PORT
