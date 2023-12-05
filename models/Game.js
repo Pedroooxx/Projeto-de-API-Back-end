@@ -17,6 +17,10 @@ const gamesSchema = mongoose.Schema(
         ownerId: {
             type: String,
             required: [true]
+        },
+        achievments: {
+            type: Number,
+            default: 0
         }
     },
     {

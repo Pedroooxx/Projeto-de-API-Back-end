@@ -18,6 +18,11 @@ const userSchema = mongoose.Schema(
             type: String,
             default: "user",
             required: true
+        },
+        completedGames: {
+            type: Number,
+            default: 0,
+            required: true
         }
     },
     {

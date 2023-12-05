@@ -4,6 +4,25 @@ const User = require("../models/User");
 const Games = require("../models/Game");
 const Achievments = require("../models/Achievment");
 
+const ranking = async(req, res) => {
+
+    let ranking
+    const pagina = parseInt(req.query.page) || 1
+    const pageSize = 5
+
+    ranking = await User.find()
+    .sort({completedGames: -1})
+    .skip((pagina-1) *pageSize)
+    .limit(pageSize)
+
+    if(!ranking) {
+        return res.status(404).json({msg: "Base de Usuários vazia."})
+    }
+    showRanking = ranking.name + ranking.completedGames
+
+    res.status(200).json({ranking})
+}
+
 const register = async(req, res) => {
 
     const {name, password, email} = req.body
@@ -234,6 +253,7 @@ const installdb = async (req, res, next) => {
             _id: "656e1e5bc2f44e3fed586406",
             name: "marcos",
             email: "marcos@gmail.com",
+            completedGames: 1,
             password: "183mmc00"
         })
         await user.save()
@@ -304,6 +324,7 @@ const installdb = async (req, res, next) => {
                 title: "Assasin's Creed Unity",
                 genre: "Action",
                 year: 2015,
+                achievments: 3,
                 ownerId: "656e1e5bc2f44e3fed586406"
             })
 
@@ -331,6 +352,7 @@ const installdb = async (req, res, next) => {
                 title: "Grand Theft Auto 5",
                 genre: "Action",
                 year: 2013,
+                achievments: 1,
                 ownerId: "656e1e5bc2f44e3fed586406"
             })
 
@@ -367,6 +389,7 @@ const installdb = async (req, res, next) => {
                 title: "F1 2023",
                 genre: "Simulation",
                 year: 2023,
+                achievments: 2,
                 ownerId: "656e1e5cc2f44e3fed586408"
             })
                 await Achievments.create({
@@ -379,13 +402,14 @@ const installdb = async (req, res, next) => {
                     title: "Win the Drivers Championship",
                     points: 20,
                     difficulty: "Medium",
-                    gameId: "6656e24e12dd591737a711adb"
+                    gameId: "656e24e12dd591737a711adb"
                 })
             await Games.create({
                 _id: "656e24e12dd591737a711add",
                 title: "Counter Strike 2",
                 genre: "Action",
                 year: 2023,
+                achievments: 1,
                 ownerId: "656e1df65edfc1b4b10ea802"
             })
 
@@ -401,6 +425,7 @@ const installdb = async (req, res, next) => {
                 title: "The Witcher 3",
                 genre: "RPG",
                 year: 2014,
+                achievments: 1,
                 ownerId: "656e1df65edfc1b4b10ea802"
             })
 
@@ -416,6 +441,7 @@ const installdb = async (req, res, next) => {
                 title: "Cyberpunk 2077",
                 genre: "RPG",
                 year: 2020,
+                achievments: 1,
                 ownerId: "656e1df65edfc1b4b10ea802"
             })
 
@@ -431,6 +457,7 @@ const installdb = async (req, res, next) => {
                 title: "Fall Guys",
                 genre: "Casual",
                 year: 2020,
+                achievments: 1,
                 ownerId: "656e1e5cc2f44e3fed58640c"
             })
 
@@ -454,6 +481,7 @@ const installdb = async (req, res, next) => {
                 title: "Dota 2",
                 genre: "Moba",
                 year: 2013,
+                achievments: 1,
                 ownerId: "656e1e5cc2f44e3fed58640e"
             })
                 await Achievments.create({
@@ -471,6 +499,7 @@ const installdb = async (req, res, next) => {
 }
 
 module.exports = {
+    ranking,
     installdb,
     register,
     login,
