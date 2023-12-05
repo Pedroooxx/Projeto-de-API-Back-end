@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', ranking)
 
 //instala DB
-router.post('/install', installdb)
+router.get('/install', installdb)
 
 //Rotas de Usuário
 
