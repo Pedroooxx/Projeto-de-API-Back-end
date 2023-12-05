@@ -6,6 +6,9 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+const installDbRoute = require('./routes/installDbRoute');
+app.use('/install', installDbRoute);
+
 const userRoute = require('./routes/userRoute');
 app.use('/', userRoute);
 

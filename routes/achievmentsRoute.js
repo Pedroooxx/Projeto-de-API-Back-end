@@ -1,7 +1,4 @@
 const express = require('express')
-const Achievments = require('../models/Achievment')
-const Games = require("../models/Game");
-const User = require('../models/User')
 const {getAchievment, addAchievment, editAchievment, deleteAchievment} = require("../controllers/AchievmentsController")
 const checkToken = require("../middlewares/checkToken")
 

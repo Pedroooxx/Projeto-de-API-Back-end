@@ -2,7 +2,7 @@ const express = require('express')
 const User = require('../models/User')
 const Games = require('../models/Game')
 const Achievments = require('../models/Achievment')
-const {ranking, installdb, register, login, editUser, deleteUser, getUser, getLibrary, getAGame, adminDeleteUser, adminEditUser, adminGetUsers, getRole} = require("../controllers/UserController")
+const {ranking, register, login, editUser, deleteUser, getUser, getLibrary, getAGame, adminDeleteUser, adminEditUser, adminGetUsers, getRole} = require("../controllers/UserController")
 const checkToken = require("../middlewares/checkToken")
 const checkAdmin = require("../middlewares/checkAdmin")
 
@@ -10,9 +10,6 @@ const router = express.Router();
 
 //Rota Pública + Ranking de Usuário (Regra de Negocio)
 router.get('/', ranking)
-
-//instala DB
-router.get('/install', installdb)
 
 //Rotas de Usuário
 

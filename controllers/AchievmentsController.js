@@ -47,7 +47,6 @@ const addAchievment = async (req, res) => {
         game = await Games.findByIdAndUpdate(gameId, {achievments: achievs})
 
         if(game.achievments == 2 ){
-            console.log(game.achievments)
             const user = await User.findById(game.ownerId)
             const addCompleted = user.completedGames + 1
             await User.findByIdAndUpdate(game.ownerId, {completedGames: addCompleted})
