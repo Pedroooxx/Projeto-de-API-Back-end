@@ -240,11 +240,6 @@ const adminGetUsers = async(req, res) => {
     res.status(200).json({users})
 }
 
-const getRole = async(req, res) => {
-    const user = await User.findById(req.userId)
-    return user.role
-}
-
 module.exports = {
     ranking,
     register,
@@ -256,6 +251,5 @@ module.exports = {
     getAGame,
     adminDeleteUser,
     adminEditUser,
-    adminGetUsers,
-    getRole
+    adminGetUsers
 }

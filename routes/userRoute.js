@@ -1,5 +1,5 @@
 const express = require('express')
-const {ranking, register, login, editUser, deleteUser, getUser, getLibrary, getAGame, adminDeleteUser, adminEditUser, adminGetUsers, getRole} = require("../controllers/UserController")
+const {ranking, register, login, editUser, deleteUser, getUser, getLibrary, getAGame, adminDeleteUser, adminEditUser, adminGetUsers} = require("../controllers/UserController")
 const checkToken = require("../middlewares/checkToken")
 const checkAdmin = require("../middlewares/checkAdmin")
 
@@ -7,6 +7,8 @@ const router = express.Router();
 
 //Rota Pública + Ranking de Usuário (Regra de Negocio)
 router.get('/', ranking)
+
+const User = require("../models/User");
 
 //Rotas de Usuário
 
@@ -26,10 +28,12 @@ router.get('/usuario/biblioteca/jogo/:id', checkToken, getAGame)
 
 //Rotas de Administrador
 
-router.get('/admin/usuarios', checkToken, checkAdmin("admin", ["admin"]), adminGetUsers)
+router.get('/admin/usuarios', checkToken, checkAdmin, adminGetUsers)
 
-router.put('/admin/editar/:id', checkToken, checkAdmin("admin", ["admin"]), adminEditUser)
+router.put('/admin/editar/:id', checkToken, checkAdmin, adminEditUser)
 
-router.delete('/admin/apagar/:id', checkToken, checkAdmin("admin", ["admin"]), adminDeleteUser)
+router.delete('/admin/apagar/:id', checkToken, checkAdmin, adminDeleteUser)
+
+
 
 module.exports = router;

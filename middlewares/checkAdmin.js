@@ -1,14 +1,18 @@
 const User = require("../models/User");
 
-function checkAdmin (role, permissions) {
+const checkAdmin = async (req, res, next) => {
 
-    return(req, res, next) => {
-        if(permissions.includes(role)){
-            next()
-        } else {
-            res.status(401).json({msg: "Acesso NEGADO."})
-        }
+    const user = await User.findById(req.userId)
+    const userRole = user.role
+    
+    console.log(userRole, "admin")
+
+    if("admin".includes(userRole)){
+        next()
+    } else {
+        res.status(401).json({msg: "Acesso NEGADO."})
     }
+
 }
 
 module.exports = checkAdmin
