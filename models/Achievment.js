@@ -4,15 +4,15 @@ const achievmentsSchema = mongoose.Schema(
     {
         title: {
             type: String,
-            required: [true, "Digite o nome da Conquista"]
+            required: true
         },
         points: {
             type: Number,
-            required: [true, "Digite a pontuação da Conquista"]
+            required: true
         },
         difficulty: {
             type: String,
-            required: [true, "Digite a dificuldade da Conquista"]
+            required: true
         },
         gameId: {
             type: String

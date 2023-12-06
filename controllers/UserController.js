@@ -30,11 +30,11 @@ const register = async(req, res) => {
     if(!name) {
         return res.status(422).json({msg: "Digite o Nome."})
     }
-    if(!password) {
-        return res.status(422).json({msg: "Digite a Senha."})
-    }
     if(!email) {
         return res.status(422).json({msg: "Digite o Email."})
+    }
+    if(!password || password == email) {
+        return res.status(422).json({msg: "Digite a Senha."})
     }
 
     const userExists = await User.findOne({email: email})
@@ -96,11 +96,13 @@ const login = async(req, res) => {
 const editUser = async (req, res) => {
     try{
         const id = req.userId
-        const user = await User.findByIdAndUpdate(id, req.body);
+        const {name, password, email} = req.body
+        const user = await User.findByIdAndUpdate(id, (name, password, email));
         
         if(!user) {
             return res.status(404).json({message: "Usuário não encontrado"})
         }
+        
         res.status(200).json(user);
     }
     catch (error) {

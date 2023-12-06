@@ -1,11 +1,9 @@
 const User = require("../models/User");
 
 const checkAdmin = async (req, res, next) => {
-
+    
     const user = await User.findById(req.userId)
     const userRole = user.role
-    
-    console.log(userRole, "admin")
 
     if("admin".includes(userRole)){
         next()

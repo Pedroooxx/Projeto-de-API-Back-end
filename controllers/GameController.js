@@ -48,7 +48,10 @@ const editGame = async (req, res) => {
         {
             return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
         }
-        const game = await Games.findByIdAndUpdate(id, req.body);
+
+        const {title, genre, year} = req.body
+
+        const game = await Games.findByIdAndUpdate(id, (title, genre, year));
         console.log(game.ownerId)
 
         if(!game) {

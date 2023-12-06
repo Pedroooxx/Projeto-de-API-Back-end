@@ -4,19 +4,19 @@ const gamesSchema = mongoose.Schema(
     {
         title: {
             type: String,
-            required: [true, "Digite o nome do Jogo"]
+            required: true
         },
         year: {
             type: Number,
-            required: [true, "Digite o ano de lançamento do jogo"]
+            required: true
         },
         genre: {
             type: String,
-            required: [true, "Digite o genero do jogo"]
+            required: true
         },
         ownerId: {
             type: String,
-            required: [true]
+            required: true
         },
         achievments: {
             type: Number,
