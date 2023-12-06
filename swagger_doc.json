@@ -16,6 +16,29 @@
         "description": "Rota Pública - Ranking de usuário com base em jogos completados."
       }
     },
+    "/install": {
+      "get": {
+        "description": "Rota Pública - Instala o banco de dados",
+        "responses": {
+          "201": {
+            "description": "Banco instalado com sucesso"
+          },
+          "400": {
+            "description": "Banco Já instalado"
+          }
+        }
+      }
+    },
+    "/docs": {
+      "get": {
+        "description": "Rota Pública - Acesa a documentação com swagger",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/registro": {
       "post": {
         "description": "Rota de registro de usuário",
