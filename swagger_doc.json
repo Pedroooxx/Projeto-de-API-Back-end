@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "title": "API REST de Gerenciamento de biblioteca de jogos.",
-    "description": "Api Rest com banco Mongo onde um ussuário pode adicionar jogos a uma biblioteca particupar bem como conquistas para esses jogos, enquanto parcipa de um Ranking público.",
-    "version": "1.0.0"
+    "description": "Api Rest com banco Mongo onde um usuário pode adicionar jogos a uma biblioteca particular bem como adicionar conquistas para esses jogos, enquanto parcipa de um Ranking público.",
+    "version": "final"
   },
   "host": "http://localhost:3333",
   "basePath": "/",
@@ -13,83 +13,12 @@
   "paths": {
     "/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "genre": {
-                  "example": "any"
-                },
-                "year": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "description": "Rota Pública - Ranking de usuário com base em jogos completados."
       }
     },
     "/registro": {
       "post": {
-        "description": "",
+        "description": "Rota de registro de usuário",
         "parameters": [
           {
             "name": "body",
@@ -98,13 +27,13 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "example": "qualquer"
                 },
                 "password": {
-                  "example": "any"
+                  "example": "qualquer diferente de nome"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "exemplo@email.com"
                 }
               }
             }
@@ -112,13 +41,13 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Usuário Criado"
           },
           "422": {
-            "description": "Unprocessable Entity"
+            "description": "Email já cadastrado"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro no servidor"
           }
         }
       }
@@ -134,10 +63,10 @@
               "type": "object",
               "properties": {
                 "password": {
-                  "example": "any"
+                  "example": "email cadastrado"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "senha cadastrada"
                 }
               }
             }
@@ -145,13 +74,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Logado"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Email ou senha invalido"
           },
           "422": {
-            "description": "Unprocessable Entity"
+            "description": "Email ou senha faltante"
           }
         }
       }
@@ -161,26 +90,41 @@
         "description": "",
         "parameters": [
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "qualquer"
+                },
+                "password": {
+                  "example": "qualquer diferente de nome"
+                },
+                "email": {
+                  "example": "novo email"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
+            "description": "Usuário editado"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Usuário não encontrado"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro no servidor"
           }
         }
       }
@@ -190,26 +134,23 @@
         "description": "",
         "parameters": [
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
+            "description": "Usuário apagado"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Usuário não encontrado"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro no servidor"
           }
         }
       }
@@ -219,7 +160,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           }
@@ -228,31 +169,28 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado (Bearer Token)"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Usuário não encontrado"
           }
         }
       }
     },
     "/usuario/biblioteca": {
       "get": {
-        "description": "",
+        "description": "Acessa todos os jogos do usuário",
         "parameters": [
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           },
           {
             "name": "page",
             "in": "query",
-            "type": "string"
+            "type": "number"
           }
         ],
         "responses": {
@@ -260,36 +198,36 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Id como parametro faltante"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado (Bearer Token)"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Usuario não encontrado"
           }
         }
       }
     },
     "/usuario/biblioteca/jogo/{id}": {
       "get": {
-        "description": "",
+        "description": "Acessa um jogo do usuário e as suas conquistas",
         "parameters": [
           {
-            "name": "id",
+            "name": "id do jogo",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           },
           {
             "name": "page",
             "in": "query",
-            "type": "string"
+            "type": "number"
           }
         ],
         "responses": {
@@ -297,229 +235,139 @@
             "description": "OK"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Usuário não está ligado a esse jogo."
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado (Bearer Token)"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Id não encontrada"
           }
         }
       }
     },
     "/admin/usuarios": {
       "get": {
-        "description": "",
+        "description": "Rotas de admin, caso possua role: admin, é capaz acessar lista com todos os usuários",
         "parameters": [
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           },
           {
             "name": "page",
             "in": "query",
-            "type": "string"
+            "type": "number"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado (Bearer Token)"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Id não encontrada"
           }
         }
       }
     },
     "/admin/editar/{id}": {
       "put": {
-        "description": "",
+        "description": "Admin pode alterar informação de qualquer usuário, inclusive criar novos administradores através do parametro role",
         "parameters": [
           {
-            "name": "id",
+            "name": "id do usuario a ser editado",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "qualquer"
+                },
+                "password": {
+                  "example": "qualquer diferente de nome"
+                },
+                "email": {
+                  "example": "novo email"
+                },
+                "role": {
+                  "example": "user ou admin"
+                },
+                "conpletedGames": {
+                  "example": "numero"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado (Bearer Token)"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Usuário não encontrado"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro no servidor"
           }
         }
       }
     },
     "/admin/apagar/{id}": {
       "delete": {
-        "description": "",
+        "description": "Admins podem apagar qualquer usuário",
         "parameters": [
           {
-            "name": "id",
+            "name": "id do usuário a ser apagado",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "Usuário apagado"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Não autorizado (Bearer Token)"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Usuario não encontrado"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro do Servidor"
           }
         }
       }
     },
-    "/{id}": {
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
+    "/game": {
       "post": {
-        "description": "",
+        "description": "Posta um jogo",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
+            "name": "Bearer Token",
             "in": "header",
             "type": "string"
           },
@@ -530,13 +378,13 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "example": "qualquer"
                 },
-                "points": {
-                  "example": "any"
+                "year": {
+                  "example": "qualquer ano"
                 },
-                "difficulty": {
-                  "example": "any"
+                "genre": {
+                  "example": "qualquer"
                 }
               }
             }
@@ -544,19 +392,284 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Jogo criado"
           },
-          "400": {
-            "description": "Bad Request"
+          "422": {
+            "description": "Título, Genero ou Ano faltante"
           },
           "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
+            "description": "Não autorizado (Bearer Token)"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/game/{id}": {
+      "get": {
+        "description": "Acessa um jogo",
+        "parameters": [
+          {
+            "name": "id do jogo a ser acessado",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Jogo criado"
+          },
+          "404": {
+            "description": "Jogo não encontrado"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "description": "Edita um jogo",
+        "parameters": [
+          {
+            "name": "id do jogo a ser acessado",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "qualquer"
+                },
+                "year": {
+                  "example": "qualquer ano"
+                },
+                "genre": {
+                  "example": "qualquer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Jogo editado"
+          },
+          "404": {
+            "description": "Jogo não encontrado"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "description": "Apaga um jogo",
+        "parameters": [
+          {
+            "name": "id do jogo a ser apagado",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Jogo apagado"
+          },
+          "404": {
+            "description": "Jogo não encontrado"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      }
+    },
+    "/game/achievment/{id}": {
+      "post": {
+        "description": "Posta uma conquista",
+        "parameters": [
+          {
+            "name": "id do jogo que receberá a conquista",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "qualquer"
+                },
+                "points": {
+                  "example": "qualquer valor"
+                },
+                "difficulty": {
+                  "example": "qualquer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conquista criada"
+          },
+          "404": {
+            "description": "Usuário não está ligado a esse jogo."
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "get": {
+        "description": "Acessa uma conquista",
+        "parameters": [
+          {
+            "name": "id da conquista",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Usuário não está ligado ao jogo da conquista."
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "put": {
+        "description": "Edita uma conquista",
+        "parameters": [
+          {
+            "name": "id da conquista a ser modificada",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "qualquer"
+                },
+                "points": {
+                  "example": "qualquer valor"
+                },
+                "difficulty": {
+                  "example": "qualquer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conquista editada"
+          },
+          "404": {
+            "description": "Conquista não encontrada"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
+          }
+        }
+      },
+      "delete": {
+        "description": "Apaga uma conquista",
+        "parameters": [
+          {
+            "name": "id da conquista a ser apagada",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Bearer Token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conquista apagada"
+          },
+          "404": {
+            "description": "Conquista não encontrada"
+          },
+          "401": {
+            "description": "Não autorizado (Bearer Token)"
+          },
+          "500": {
+            "description": "Erro no servidor"
           }
         }
       }

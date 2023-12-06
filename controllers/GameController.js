@@ -25,6 +25,16 @@ const addGame = async (req, res) => {
     try{
         const {title, genre, year} = req.body
 
+        if(!title) {
+            return res.status(422).json({msg: "Digite o titulo do jogo."})
+        }
+        if(!genre) {
+            return res.status(422).json({msg: "Digite o genero do jogo."})
+        }
+        if(!year) {
+            return res.status(422).json({msg: "Digite o ano do jogo."})
+        }
+
         const game = await Games.create({
             title: title,
             genre: genre,

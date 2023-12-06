@@ -30,25 +30,31 @@ sua posição no ranking público de usuários aumentará.
 
 ## Rotas de Usuário
 1. GET "{URL}/usuario" -> Acessa as informações do usuário
-2. PUT "{URL}/editar" -> Edita as informações do usuário via "params"
+2. PUT "{URL}/editar" -> Edita as informações do usuário via "body"
 3. DELETE "{URL}/apagar" -> Apaga a conta do usuário logado
 4. GET "{URL}/usuario/biblioteca?page=1" -> Acessa a Biblioteca do usuário (5 em 5 itens)
 5. GET "{URL}/usuario/biblioteca/jogo/:id?page=1" -> Acessa um jogo do usuário e as suas conquistas pela "id" via "params" (5 em 5 itens)
+
+### Rotas de usuário Admin
+
+6. GET "{URL}/admin/usuarios" -> Gera uma lista com todos os usuários
+7. GET "{URL}/admin/editar/:id" -> Gera uma lista com todos os usuários
+8. GET "{URL}/admin/apagar/:id" -> Gera uma lista com todos os usuários
 
 ## Rotas de Jogos
 
 Para as operações HTTP dos jogos, a id do usuário autenticado será conferida via token, fazendo com que somente o dono dos jogos possam altera-los
 
 1. POST "{URL}/game" -> Posta um jogo via "body"
-2. PUT "{URL}/game" -> Edita as informações de um jogo por id via "params" e informações por "body"
-3. DELETE "{URL}/game" -> Apaga um jogo por id via "params"
-4. GET "{URL}/game" -> Acessa um jogo por id via "params"
+2. PUT "{URL}/game/:id" -> Edita as informações de um jogo por id via "params" e informações por "body"
+3. DELETE "{URL}/game/:id" -> Apaga um jogo por id via "params"
+4. GET "{URL}/game/:id" -> Acessa um jogo por id via "params"
 
 ## Rotas de Conquistas
 
 Para as operações HTTP das conquistas, a id do usuário autenticado será conferida via token, fazendo com que somente o dono dos jogos possam seja adicionar conquistas aos seus próprios jogos, bem como altera-las
 
-1. POST "{URL}/game/achievment" -> Posta uma conquista para um jogo por sua id via "params" e as informações da conquista via "body"
-2. PUT "{URL}/game/achievment" -> Edita a conquista de um jogo por sua id via "params" e as informações da conquista via "body"
-3. DELETE "{URL}/game/achievment" -> Apaga uma conquista por id via "params"
-4. GET "{URL}/game/achievment" -> Acessa um conquista por id via "params"
+1. POST "{URL}/game/achievment/:id" -> Posta uma conquista para um jogo por sua id via "params" e as informações da conquista via "body"
+2. PUT "{URL}/game/achievment/:id" -> Edita uma conquista por sua id via "params" e as informações da conquista via "body"
+3. DELETE "{URL}/game/achievment/:id" -> Apaga uma conquista por id via "params"
+4. GET "{URL}/game/achievment/:id" -> Acessa um conquista por id via "params"

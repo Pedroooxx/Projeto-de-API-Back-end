@@ -159,7 +159,7 @@ const getLibrary = async(req, res) => {
     }
 
     if(!user) {
-        return res.status(404).json({msg: "Usuario não encontrado."})
+        return res.status(400).json({msg: "Usuario não encontrado."})
     }
     res.status(200).json({user, games})
 }
@@ -176,7 +176,7 @@ const getAGame = async(req, res) => {
         game = await Games.findById(id)
         if(game.ownerId != req.userId)
         {
-            return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
+            return res.status(400).json({message: "Usuário não está ligado a esse jogo."})
         }
         achievments = await Achievments.find({gameId: id})
         .skip((pagina-1) *pageSize)
