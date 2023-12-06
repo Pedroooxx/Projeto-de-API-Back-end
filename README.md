@@ -16,7 +16,7 @@ Este projeto consiste em um sistema de cadastro de Jogos e conquistas em uma bib
 Como forma de incentivar os usuários que utilizam a plataforma, sempre que uma CONQUISTA for adicionada
 a um JOGO, um contador aumentará em 1, caso um JOGO tenha 3 conquistas cadastradas, o USUÁRIO que as
 cadastrou terá 'completado o jogo' ou seja, a váriavel Completed Games aumentará em 1, isso fará que
-sua posição no ranking público de usuários aumentará.
+sua posição no ranking público de usuários aumentar.
 
 # Rotas Públicas - Há algumas coisas que podem ser feitas sem o cadastro/login prévio:
 1. "{URL}" -> acessa a rota base do projeto contendo um ranking público de usuários baseado nos jogos completados
@@ -35,11 +35,11 @@ sua posição no ranking público de usuários aumentará.
 4. GET "{URL}/usuario/biblioteca?page=1" -> Acessa a Biblioteca do usuário (5 em 5 itens)
 5. GET "{URL}/usuario/biblioteca/jogo/:id?page=1" -> Acessa um jogo do usuário e as suas conquistas pela "id" via "params" (5 em 5 itens)
 
-### Rotas de usuário Admin
+## Rotas de Usuário Admin
 
 6. GET "{URL}/admin/usuarios" -> Gera uma lista com todos os usuários
-7. GET "{URL}/admin/editar/:id" -> Gera uma lista com todos os usuários
-8. GET "{URL}/admin/apagar/:id" -> Gera uma lista com todos os usuários
+7. GET "{URL}/admin/editar/:id" -> Edita um usuário passado por "params", podendo tambem dar o cargo "role" "admin" a outros
+8. GET "{URL}/admin/apagar/:id" -> "Apaga um usuário passado via params"
 
 ## Rotas de Jogos
 
