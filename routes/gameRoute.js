@@ -1,10 +1,10 @@
 const express = require('express')
-const {getGames, addGame, editGame, deleteGame} = require("../controllers/GameController")
+const {getGame, addGame, editGame, deleteGame} = require("../controllers/GameController")
 const checkToken = require("../middlewares/checkToken")
 
 const router = express.Router();
 
-router.get('/',checkToken, getGames)
+router.get('/:id',checkToken, getGame)
 
 router.post('/',checkToken, addGame)
 

@@ -1,20 +1,20 @@
 const Games = require("../models/Game");
 
-const getGames = async(req, res) => {
-    const userId = req.userId
+const getGame = async(req, res) => {
 
-    
-    const pagina = parseInt(req.query.page) || 1
-    const pageSize = 5
+    try{
+        const{id} = req.params;
+        const game = await Games.findById(id)
+        if(game.ownerId != req.userId)
+        {   
+            return res.status(404).json({message: "Usuário não está ligado a esse jogo."})
+        }
 
-    try { 
-        const games = await Games.find({ownerId: userId})
-        .skip((pagina-1) *pageSize)
-        .limit(pageSize);
-
-        res.status(200).json(games)
-    }
-    catch (error) {
+        if(!game) {
+            return res.status(404).json({message: "Jogo não encontrado"})
+        }
+        res.status(200).json(game);
+    } catch (error) {
         res.status(500)
         throw new Error(error.message)
     }
@@ -52,7 +52,6 @@ const editGame = async (req, res) => {
         const {title, genre, year} = req.body
 
         const game = await Games.findByIdAndUpdate(id, (title, genre, year));
-        console.log(game.ownerId)
 
         if(!game) {
             return res.status(404).json({message: "Jogo não encontrado"})
@@ -87,7 +86,7 @@ const deleteGame = async (req, res) => {
 }
 
 module.exports = {
-    getGames,
+    getGame,
     addGame,
     editGame,
     deleteGame

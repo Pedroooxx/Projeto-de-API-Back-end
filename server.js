@@ -13,10 +13,10 @@ const userRoute = require('./routes/userRoute');
 app.use('/', userRoute);
 
 const gameRoute = require('./routes/gameRoute');
-app.use('/games', gameRoute); 
+app.use('/game', gameRoute); 
 
 const achievmentsRoute = require('./routes/achievmentsRoute');
-app.use('/games/achievments', achievmentsRoute);
+app.use('/game/achievment', achievmentsRoute);
 
 const swaggerRoute = require('./routes/swaggerRoute');
 app.use('/docs', swaggerRoute);
